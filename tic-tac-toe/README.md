@@ -142,14 +142,47 @@ displayMessage(`Player ${currentPlayer}'s turn`);
 ```
 5. Add event listeners: Write a function to add event listeners to the cells on the game board. You can use the addEventListener() method to listen for clicks on each cell, and update the game state when a player makes a move.
 
-Example functions: 
+Example: 
 ```js
 checkForWinner();
 checkForTie();
 switchPlayers();
 ```
 
+```js
+let cells = document.querySelectorAll('td');
+
+function addEventListeners() {
+  cells.forEach((cell, index) => {
+    cell.addEventListener('click', () => {
+      if (board[index] === null) {
+        board[index] = currentPlayer;
+        cell.innerText = currentPlayer;
+        cell.classList.add('active');
+        checkForWinner();
+        checkForTie();
+        switchPlayers();
+      }
+    });
+  });
+}
+
+addEventListeners();
+
+```
+
 6. Switch players: Write a function to switch players after each move. You can use an if statement to toggle between X and O.
+```js
+function switchPlayers() {
+  if (currentPlayer === 'X') {
+    currentPlayer = 'O';
+  } else {
+    currentPlayer = 'X';
+  }
+  displayMessage(`Player ${currentPlayer}'s turn`);
+}
+
+```
 
 ## 4 - Create game logic
 
