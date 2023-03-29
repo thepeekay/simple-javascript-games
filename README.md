@@ -152,7 +152,173 @@ switchPlayers();
 6. Switch players: Write a function to switch players after each move. You can use an if statement to toggle between X and O.
 
 ## 4 - Create game logic
+
+1. Write a function to check for a winner: In your JavaScript file, write a function to check if a player has won the game. You can define an array of winning combinations, and check if any of the combinations match the current game board.
+Example: 
+```js
+function checkForWinner() {
+  let winningCombinations = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6]
+  ];
+
+  let winner = null;
+
+  winningCombinations.forEach(combination => {
+    let [a, b, c] = combination;
+    if (board[a] !== null && board[a] === board[b] && board[b] === board[c]) {
+      winner = board[a];
+      highlightWinnerCells(combination);
+    }
+  });
+
+  if (winner !== null) {
+    displayMessage(`Player ${winner} wins!`);
+    removeEventListeners();
+  }
+}
+```
+
+2. Write a function to check for a tie: Write a function to check if the game has ended in a tie. You can check if all the cells on the game board are filled with a player move, and if there is no winner.
+
+Example:
+
+```js
+function checkForTie() {
+  if (!board.includes(null)) {
+    displayMessage('Tie game!');
+    removeEventListeners();
+  }
+}
+```
+
+3. Write a function to update the game board: Write a function to update the game `board` when a player makes a move. You can update the `board` array and update the text of the cell that was clicked.
+
+```js
+function updateGameBoard(index) {
+  board[index] = currentPlayer;
+  let cell = cells[index];
+  cell.innerText = currentPlayer;
+  cell.classList.add('active');
+}
+```
+
+4. Write a function to highlight winner cells: Write a function to highlight the cells that form a winning combination. You can add a CSS class to the cells that belong to the winning combination.
+
+5. Write a function to remove event listeners: Write a function to remove the event listeners from the cells on the game board. This is necessary when the game ends, to prevent players from making additional moves.
+
 ## 5 - Handle player input
+
+1. Add event listeners to cells: In your JavaScript file, write a function to add event listeners to the cells on the game board. You can use the addEventListener() method to listen for clicks on each cell, and update the game state when a player makes a move.
+
+Example:
+```js
+function addEventListeners() {
+  cells.forEach((cell, index) => {
+    cell.addEventListener('click', () => {
+      if (board[index] === null) {
+        updateGameBoard(index);
+        checkForWinner();
+        checkForTie();
+        switchPlayers();
+      }
+    });
+  });
+}
+
+```
+
+2. Remove event listeners: Write a function to remove the event listeners from the cells on the game board. This is necessary when the game ends, to prevent players from making additional moves.
+Example: 
+```js
+function removeEventListeners() {
+  cells.forEach(cell => {
+    cell.removeEventListener('click', switchPlayers);
+  });
+}
+
+```
+
+3. Call addEventListeners(): Call the addEventListeners() function to add event listeners to the cells when the game is initialized.
+
+
 ## 6 - Update the game state
+
+1. Update the game state: In your JavaScript file, write a function to update the game state after a player makes a move. You can update the `board` array, update the text of the cell that was clicked, and switch to the next player's turn.
+
+```js
+function updateGameState(index) {
+  board[index] = currentPlayer;
+  let cell = cells[index];
+  cell.innerText = currentPlayer;
+  cell.classList.add('active');
+  switchPlayers();
+}
+```
+2. Call updateGameState(): Update the addEventListeners() function to call the updateGameState() function when a player clicks on a cell.
+```js
+function addEventListeners() {
+  cells.forEach((cell, index) => {
+    cell.addEventListener('click', () => {
+      if (board[index] === null) {
+        updateGameState(index);
+        checkForWinner();
+        checkForTie();
+      }
+    });
+  });
+}
+```
+
 ## 7 - Display the winner or tie message
+
+1. Restart the game: In your JavaScript file, write a function to restart the game. You can reset the board array to its initial state, clear the text and styles of the cells, and initialize the game with a new first player.
+
+```js
+function restartGame() {
+  board = [
+    null, null, null,
+    null, null, null,
+    null, null, null
+  ];
+  cells.forEach(cell => {
+    cell.innerText = '';
+    cell.classList.remove('active', 'winner');
+  });
+  currentPlayer = determineFirstPlayer();
+  displayMessage(`Player ${currentPlayer}'s turn`);
+  addEventListeners();
+}
+```
+2. Call restartGame(): Update the restart button in your HTML file to call the `restartGame()` function when it is clicked.
+```js
+<button id="restart" onclick="restartGame()">Restart Game</button>
+```
+
 ## 8 - Allow players to restart
+
+1. Create the game loop: In your JavaScript file, create a game loop that checks if the game has ended and takes appropriate action. You can use a `while` loop that runs as long as the game is not over, and checks for a winner or a tie after each move.
+
+```js
+let gameIsOver = false;
+
+while (!gameIsOver) {
+  // Player makes a move
+  // Update the game state
+  // Check for winner or tie
+  // If there is a winner or tie, end the game
+}
+
+```
+2. End the game: When the game ends, set `gameIsOver` to `true` and remove the event listeners from the cells on the game board.
+```js
+gameIsOver = true;
+removeEventListeners();
+```
+3. Restart the game: After the game ends, you can ask the player if they want to play again, and restart the game if they do
