@@ -1,5 +1,5 @@
 Find a repository with steps and guidance on how to create a few simple Javascript games like
-1. Tic tac toe (Level: intermediate)
-2. Hangman (Level: Beginner)
-3. Snake game (Level: Advanced)
-4. Rock Paper Scissors (Level: Beginner)
+1. [Tic tac toe (Level: intermediate)](/tic-tac-toe)
+2. [Hangman (Level: Beginner)](/hangman)
+3. [Snake game (Level: Advanced)](/snake-game)
+4. [Rock Paper Scissors (Level: Beginner)](/rock-paper-scissors)
