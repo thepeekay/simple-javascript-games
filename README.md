@@ -6,4 +6,4 @@ Find a repository with steps and guidance on how to create a few simple Javascri
 
 **Assets**
 
-[List of asset websites](/assets.md)
+[List of asset websites](/Assets.md)
